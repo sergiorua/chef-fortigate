@@ -30,9 +30,3 @@ end
     group "root"
   end
 end
-
-if ::File.directory?('/vagrant') or ::File.exists?('/.dockerinit') 
-  file "/opt/fortigate/creds.yaml" do
-    content "---\nusername: 'admin'\npassword: 'letmein'\n"
-  end
-end
