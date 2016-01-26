@@ -1,0 +1,32 @@
+# vi: set tabstop=2 :
+# vi: set shiftwidth=2 :
+---
+driver:
+  name: docker
+provisioner:
+  name: chef_solo
+  solo_rb:
+    local_mode: true
+    client_key:
+    file_atomic_update: false
+platforms:
+  - name: centos6
+    driver_config:
+      use_sudo: false
+      #image: jrwesolo/centos-with-chef:6
+      image: appelgriebsch/centos7
+      platform: rhel
+      provision_command:
+        - yum install -q -y cronie tar
+suites:
+  - name: fortigate
+    run_list:
+      - recipe[fortigate::default]
+      - recipe[fortigate::install]
+      - recipe[fortigate::test_create]
+      - recipe[fortigate::test_delete]
+    attributes:
+      is_docker: true
+      chef_client:
+        config:
+          log_level: ":debug"
