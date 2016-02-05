@@ -146,7 +146,9 @@ class SkyBetFG:
     self.d.load_config(section)
     self.d.candidate_config[section][name] = new_r
 
-  def add_service(self, name=None, tcp_portrange=None, udp_portrange=None, vdom=None, comment=None, category='General'):
+  def add_service(self, name=None, tcp_portrange=None, udp_portrange=None, vdom=None, comment=None, 
+      visibility=None, category='General'):
+
     section = 'firewall service custom'
     new_ser = FortiConfig(config_type='edit', name=name)
 
@@ -158,6 +160,8 @@ class SkyBetFG:
       new_ser.set_param('tcp-portrange', quote(tcp_portrange))
     if udp_portrange:
       new_ser.set_param('udp-portrange', quote(udp_portrange))
+    if visibility:
+      new_ser.set_param('visibility', visibility)
 
     self.d.load_config(section)
     self.d.candidate_config[section][name] = new_ser

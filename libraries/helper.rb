@@ -39,7 +39,9 @@ module Fortigate
 
     def to_yaml(r)
       if r.class.name.include? 'FortigateAddress'
-        s = {"host" => r.host, "vdom" => r.vdom, "name" => r.name, "credentials" => r.credentials, 'comment' => r.comment, 'interface' => r.interface}
+        s = {"host" => r.host, "vdom" => r.vdom, "name" => r.name, "credentials" => r.credentials, 
+            'comment' => r.comment, 
+            'interface' => r.interface}
         if r.country != ''
           s["country"] = r.country
           s['type'] = 'geography'
@@ -49,7 +51,15 @@ module Fortigate
       elsif r.class.name.include? 'FortigateAddrgrp'
         s = {"host" => r.host, "vdom" => r.vdom, "name" => r.name, "member" => r.member, "credentials" => r.credentials, 'comment' => r.comment}
       elsif r.class.name.include? 'FortigateService'
-        s = {"host" => r.host, "vdom" => r.vdom, "name" => r.name, "tcp_portrange" => r.tcp, "udp_portrange" => r.udp, "credentials" => r.credentials, "category" => r.category, 'comment' => r.comment}
+        s = {"host" => r.host, 
+              "vdom" => r.vdom, 
+              "name" => r.name, 
+              "tcp_portrange" => r.tcp, 
+              "udp_portrange" => r.udp, 
+              "credentials" => r.credentials, 
+              "category" => r.category, 
+              'visibility' => r.visibility,
+              'comment' => r.comment}
       elsif r.class.name.include? 'FortigatePolicy'
         s = {"host" => r.host, "vdom" => r.vdom, "name" => r.name, "credentials" => r.credentials,
              "srcintf"  => r.srcintf, 

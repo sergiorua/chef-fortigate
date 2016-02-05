@@ -19,6 +19,7 @@ class Chef
     attribute :udp, kind_of: [String, Array], default: nil
     attribute :host, kind_of: String, required: true, default: nil
     attribute :credentials, kind_of: String, default: '/opt/fortigate/creds.yaml'
+    attribute :visibility, kind_of: String, default: nil
 
     attr_writer :exists, :update, :type
   end
@@ -45,6 +46,7 @@ class Chef
         @current_resource.credentials(c['credentials'])
         @current_resource.tcp(c['tcp'])
         @current_resource.udp(c['udp'])
+        @current_resource.visibility(c['visibility'])
         @current_resource.category(c['category'])
       end
 
