@@ -61,6 +61,7 @@ module Fortigate
              "schedule" => r.schedule,
              "ippool"   => r.ippool,
              "fwaction" => r.fwaction, 
+             "logtraffic" => r.logtraffic, 
              "comments" => r.comments}
       elsif r.class.name.include? 'FortigateVip'
         s = {"host" => r.host, "vdom" => r.vdom, "name" => r.name, "credentials" => r.credentials,

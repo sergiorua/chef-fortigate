@@ -191,7 +191,7 @@ class SkyBetFG:
       vdom=None,
       name=None, srcintf=None, dstintf=None, srcaddr=None,
       dstaddr=None, service=None, nat="disable",
-      action="accept", schedule='always', ippool=None, comments=""):
+      action="accept", schedule='always', ippool=None, logtraffic=None, comments=""):
 
     section = 'firewall policy'
     new_fw = FortiConfig(config_type='edit', name=name)
@@ -204,6 +204,8 @@ class SkyBetFG:
     new_fw.set_param('nat', nat)
     new_fw.set_param('action', action)
 
+    if logtraffic:
+      new_fw.set_param('logtraffic', '"%s"' % logtraffic)
     if comments:
       new_fw.set_param('comments', '"%s"' % comments)
 

@@ -26,6 +26,7 @@ class Chef
     attribute :srcintf, kind_of: [String, Array], default: 'any'
     attribute :comments, kind_of: String, default: nil
     attribute :ippool, kind_of: String, default: nil
+    attribute :logtraffic, kind_of: String, default: nil
 
     attr_writer :exists, :update, :type, :whyrun
   end
@@ -61,6 +62,7 @@ class Chef
         @current_resource.srcintf(c['srcintf'])
         @current_resource.comments(c['comments'])
         @current_resource.ippool(c['ippool'])
+        @current_resource.logtraffic(c['logtraffic'])
       end
 
       if Chef::Config[:why_run] or node.include?('is_docker')
