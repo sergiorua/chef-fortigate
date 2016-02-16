@@ -75,6 +75,8 @@ class FgEntry:
   interface=[]
   vip=[]
   static=[]
+  user=[]
+  usergroup=[]
 
   def __init__(self, options):
     self.con = SkyBetFG(hostname=options['host'], username=options['username'], password=options['password'],
@@ -103,6 +105,8 @@ if __name__ == '__main__':
     data = read_from_file(fi)
     if 'subnet' in data or 'country' in data:
       section = 'firewall address'
+    elif 'group_members' in data:
+      section = 'user group'
     elif 'member' in data:
       section = 'firewall addrgrp'
     elif 'port' in data or 'category' in data:
@@ -115,6 +119,8 @@ if __name__ == '__main__':
       del data['fwaction']
     elif 'gateway' in data:
       section = 'router static'
+    elif 'passwd' in data:
+      section = 'user local'
     else:
       print "Invalid data file: ", fi
       continue
@@ -158,6 +164,10 @@ if __name__ == '__main__':
       fgs[save_str].vip.append(data)
     elif 'router static' in section:
       fgs[save_str].static.append(data)
+    elif 'user local' in section:
+      fgs[save_str].user.append(data)
+    elif 'user group' in section:
+      fgs[save_str].usergroup.append(data)
 
 
 for fg in fgs:
@@ -177,6 +187,10 @@ for fg in fgs:
     if data: fgs[fg].con.add_fw_vip(**data)
   for data in fgs[fg].static:
     if data: fgs[fg].con.add_static_route(**data)
+  for data in fgs[fg].user:
+    if data: fgs[fg].con.add_user(**data)
+  for data in fgs[fg].usergroup:
+    if data: fgs[fg].con.add_group(**data)
 
 
   fgs[fg].con.commit()

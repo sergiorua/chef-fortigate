@@ -22,9 +22,7 @@ suites:
   - name: fortigate
     run_list:
       - recipe[fortigate::default]
-      - recipe[fortigate::install]
-      - recipe[fortigate::test_create]
-      - recipe[fortigate::test_delete]
+      - recipe[fortigate::test_user]
     attributes:
       is_docker: true
       chef_client:

@@ -1,5 +1,5 @@
 fortigate_vip "sergiovip001" do
-  host 'sbg-int-lc-fg-01'
+  host 'fortigate'
   vdom 'root'
   extip '172.16.159.84'
   extintf "any"

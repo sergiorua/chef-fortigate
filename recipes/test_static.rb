@@ -1,5 +1,5 @@
 fortigate_static "10" do
-  host 'sbg-int-mx-fg-01'
+  host 'fortigate'
   vdom 'internal'
 
   gateway '10.254.1.1'
