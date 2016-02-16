@@ -89,7 +89,16 @@ module Fortigate
               "dst" => r.dst,
               "gateway" => r.gateway,
               "comment" => r.comment }
-            
+      elsif r.class.name.include? 'FortigateUserGroup'
+        s = {"host" => r.host, "vdom" => r.vdom, "name" => r.name, "credentials" => r.credentials,
+              "group_members" => r.member
+            }
+      elsif r.class.name.include? 'FortigateUser'
+        s = {"host" => r.host, "vdom" => r.vdom, "name" => r.name, "credentials" => r.credentials,
+              "type" => r.type,
+              "passwd" => r.passwd,
+              "email" => r.email
+        }
       end
       return YAML.dump(s)
     end
