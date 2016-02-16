@@ -83,7 +83,8 @@ module Fortigate
         s = {"host" => r.host, "vdom" => r.vdom, "name" => r.name, "credentials" => r.credentials,
               "type" => r.type,
               "passwd" => r.passwd,
-              "email" => r.email
+              "email" => r.email,
+              "status" => r.status
         }
       end
       return YAML.dump(s)

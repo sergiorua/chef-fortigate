@@ -18,6 +18,7 @@ class Chef
     attribute :type, kind_of: String, default: 'password'
     attribute :email, kind_of: String, default: nil
     attribute :passwd, kind_of: String, default: nil
+    attribute :status, kind_of: String, default: nil
 
     attr_writer :exists
   end
@@ -46,6 +47,7 @@ class Chef
         @current_resource.type(c['type'])
         @current_resource.email(c['email'])
         @current_resource.passwd(c['passwd'])
+        @current_resource.status(c['status'])
       end
 
       if Chef::Config[:why_run] or node.include?('is_docker')
