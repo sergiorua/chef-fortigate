@@ -125,6 +125,7 @@ class SkyBetFG:
 
   def add_user(self, **cfg):
     section='user local'
+    name = cfg['name']
     new_user = FortiConfig(config_type='edit', name=cfg['name'])
 
     new_user.set_param('passwd', cfg['passwd'])
@@ -134,8 +135,9 @@ class SkyBetFG:
     self.d.load_config(section)
     self.d.candidate_config[section][name] = new_user
 
-  def add_user(self, **cfg):
+  def add_group(self, **cfg):
     section='user group'
+    name = cfg['name']
     new_userg = FortiConfig(config_type='edit', name=cfg['name'])
 
     new_userg.set_param('member', quote(cfg['group_members']))

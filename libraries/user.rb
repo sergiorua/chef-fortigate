@@ -6,7 +6,6 @@ class Chef
 
     # Set the resource name
     self.resource_name = :fortigate_user
-    provides :fortigate_user
 
     default_action :create
     provides :fortigate_user

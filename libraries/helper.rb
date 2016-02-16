@@ -15,21 +15,7 @@ module Fortigate
 
     # /opt/fortigate/entries.d/<host>/<vdom>/<address>/name.yaml
     def save_path(new_resource)
-      if new_resource.class.name.include? 'FortigateAddress'
-        type = 'address'
-      elsif new_resource.class.name.include? 'FortigateAddrgrp'
-        type = 'addrgrp'
-      elsif new_resource.class.name.include? 'FortigateService'
-        type = 'service'
-      elsif new_resource.class.name.include? 'FortigatePolicy'
-        type = 'policy'
-      elsif new_resource.class.name.include? 'FortigateVip'
-        type = 'vip'
-      elsif new_resource.class.name.include? 'FortigateStatic'
-        type = 'static'
-      else
-        fail "Unknown class"
-      end
+      type = new_resource.class.name.gsub('Chef::Resource::Fortigate','').downcase
       vdom=new_resource.vdom.nil? ? 'global' : new_resource.vdom
       fname = "#{new_resource.name}.yaml"
     
@@ -38,7 +24,7 @@ module Fortigate
     end
 
     def to_yaml(r)
-      if r.class.name.include? 'FortigateAddress'
+      if r.class.name.end_with? 'FortigateAddress'
         s = {"host" => r.host, "vdom" => r.vdom, "name" => r.name, "credentials" => r.credentials, 
             'comment' => r.comment, 
             'interface' => r.interface}
@@ -48,9 +34,9 @@ module Fortigate
         else
           s['subnet'] = r.subnet
         end
-      elsif r.class.name.include? 'FortigateAddrgrp'
+      elsif r.class.name.end_with? 'FortigateAddrgrp'
         s = {"host" => r.host, "vdom" => r.vdom, "name" => r.name, "member" => r.member, "credentials" => r.credentials, 'comment' => r.comment}
-      elsif r.class.name.include? 'FortigateService'
+      elsif r.class.name.end_with? 'FortigateService'
         s = {"host" => r.host, 
               "vdom" => r.vdom, 
               "name" => r.name, 
@@ -60,7 +46,7 @@ module Fortigate
               "category" => r.category, 
               'visibility' => r.visibility,
               'comment' => r.comment}
-      elsif r.class.name.include? 'FortigatePolicy'
+      elsif r.class.name.end_with? 'FortigatePolicy'
         s = {"host" => r.host, "vdom" => r.vdom, "name" => r.name, "credentials" => r.credentials,
              "srcintf"  => r.srcintf, 
              "dstintf"  => r.dstintf, 
@@ -73,7 +59,7 @@ module Fortigate
              "fwaction" => r.fwaction, 
              "logtraffic" => r.logtraffic, 
              "comments" => r.comments}
-      elsif r.class.name.include? 'FortigateVip'
+      elsif r.class.name.end_with? 'FortigateVip'
         s = {"host" => r.host, "vdom" => r.vdom, "name" => r.name, "credentials" => r.credentials,
               "extip"   => r.extip,
               "extintf" => r.extintf,
@@ -83,17 +69,17 @@ module Fortigate
               "mappedport"  => r.mappedport,
               "protocol"  => r.protocol,
               "comment" => r.comment }
-      elsif r.class.name.include? 'FortigateStatic'
+      elsif r.class.name.end_with? 'FortigateStatic'
         s = {"host" => r.host, "vdom" => r.vdom, "name" => r.name, "credentials" => r.credentials,
               "device" => r.device,
               "dst" => r.dst,
               "gateway" => r.gateway,
               "comment" => r.comment }
-      elsif r.class.name.include? 'FortigateUserGroup'
+      elsif r.class.name.end_with? 'FortigateUsergroup'
         s = {"host" => r.host, "vdom" => r.vdom, "name" => r.name, "credentials" => r.credentials,
               "group_members" => r.member
             }
-      elsif r.class.name.include? 'FortigateUser'
+      elsif r.class.name.end_with? 'FortigateUser'
         s = {"host" => r.host, "vdom" => r.vdom, "name" => r.name, "credentials" => r.credentials,
               "type" => r.type,
               "passwd" => r.passwd,

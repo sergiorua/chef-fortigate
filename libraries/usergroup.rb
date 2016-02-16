@@ -9,7 +9,6 @@ class Chef
     provides :fortigate_usergroup
 
     default_action :create
-    provides :fortigate_usergroup
     actions [:create, :delete]
 
     attribute :vdom, kind_of: String, default: nil
