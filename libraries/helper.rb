@@ -58,6 +58,11 @@ module Fortigate
              "ippool"   => r.ippool,
              "fwaction" => r.fwaction, 
              "logtraffic" => r.logtraffic, 
+             "auth_redirect_addr" => r.auth_redirect_addr, 
+             "auth_cert" => r.auth_cert, 
+             "profile_protocol_options" => r.profile_protocol_options, 
+             "ips_sensor" => r.ips_sensor, 
+             "utm_status" => r.utm_status, 
              "comments" => r.comments}
       elsif r.class.name.end_with? 'FortigateVip'
         s = {"host" => r.host, "vdom" => r.vdom, "name" => r.name, "credentials" => r.credentials,

@@ -28,6 +28,13 @@ class Chef
     attribute :ippool, kind_of: String, default: nil
     attribute :logtraffic, kind_of: String, default: nil
 
+    attribute :auth_redirect_addr, kind_of: String, default: nil
+    attribute :auth_cert, kind_of: String, default: nil
+
+    attribute :profile_protocol_options, kind_of: String, default: nil
+    attribute :ips_sensor, kind_of: String, default: nil
+    attribute :utm_status, kind_of: String, default: nil
+
     attr_writer :exists, :update, :type, :whyrun
   end
 
@@ -63,6 +70,12 @@ class Chef
         @current_resource.comments(c['comments'])
         @current_resource.ippool(c['ippool'])
         @current_resource.logtraffic(c['logtraffic'])
+
+        @current_resource.logtraffic(c['auth_redirect_addr'])
+        @current_resource.logtraffic(c['auth_cert'])
+        @current_resource.logtraffic(c['profile_protocol_options'])
+        @current_resource.logtraffic(c['ips_sensor'])
+        @current_resource.logtraffic(c['utm_status'])
       end
 
       if Chef::Config[:why_run] or node.include?('is_docker')
