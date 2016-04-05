@@ -189,7 +189,7 @@ class SkyBetFG:
     self.d.candidate_config[section][name] = new_ser
 
   # no type = subnet
-  def add_address(self, name=None, subnet=None, fqdn=None, country=None, type=None, vdom=None, member=None, interface=None, comment=None):
+  def add_address(self, name=None, subnet=None, fqdn=None, country=None, type=None, vdom=None, member=None, start_ip=None, end_ip=None, interface=None, comment=None):
     section = 'firewall address'
 
     new_addr = FortiConfig(config_type='edit', name=name)
@@ -204,6 +204,11 @@ class SkyBetFG:
       new_addr.set_param('subnet', subnet)
     if fqdn:
       new_addr.set_param('fqdn', fqdn)
+    if start_ip and end_ip:
+      new_addr.set_param('iprange', type)
+      new_addr.set_param('start-ip', start_ip)
+      new_addr.set_param('end-ip', end_ip)
+
     if member:
       new_addr.set_param('member', quote(member))
       section = 'firewall addrgrp'
@@ -217,6 +222,11 @@ class SkyBetFG:
       vdom=None,
       name=None, srcintf=None, dstintf=None, srcaddr=None,
       dstaddr=None, service=None, nat="disable",
+      auth_redirect_addr=None,
+      auth_cert=None,
+      profile_protocol_options=None,
+      ips_sensor=None,
+      utm_status=None,
       action="accept", schedule='always', ippool=None, logtraffic=None, comments=""):
 
     section = 'firewall policy'

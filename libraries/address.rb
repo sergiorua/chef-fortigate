@@ -13,6 +13,9 @@ class Chef
     actions [:create, :delete]
 
     attribute :subnet, kind_of: String, default: ''
+    attribute :start_ip, kind_of: String, default: ''
+    attribute :end_ip, kind_of: String, default: ''
+    attribute :fqdn, kind_of: String, default: nil
     attribute :comment, kind_of: String, default: ''
     attribute :interface, kind_of: String, default: ''
     attribute :country, kind_of: String, default: ''
@@ -46,9 +49,14 @@ class Chef
         @current_resource.credentials(c['credentials'])
         @current_resource.comment(c['comment'])
         @current_resource.interface(c['interface'])
+        @current_resource.fqdn(c['fqdn'])
+        @current_resource.start_ip(c['start_ip'])
+        @current_resource.end_ip(c['end_ip'])
 
         if @new_resource.country != ''
           @new_resource.type('geography')
+        elsif @new_resource.start_ip != ''
+          @new_resource.type('iprange')
         else
           if @current_resource.subnet != @new_resource.subnet
             @current_resource.update = true

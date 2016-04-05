@@ -31,6 +31,13 @@ module Fortigate
         if r.country != ''
           s["country"] = r.country
           s['type'] = 'geography'
+        elsif r.fqdn != ''
+          s['type'] = 'fqdn'
+          s['fqdn'] = r.fqdn
+        elsif r.start_ip != ''
+          s['type'] = 'iprange'
+          s['start_ip'] = r.start_ip
+          s['end_ip'] = r.end_ip
         else
           s['subnet'] = r.subnet
         end
