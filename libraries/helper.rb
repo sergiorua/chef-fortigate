@@ -28,7 +28,9 @@ module Fortigate
         s = {"host" => r.host, "vdom" => r.vdom, "name" => r.name, "credentials" => r.credentials, 
             'comment' => r.comment, 
             'interface' => r.interface}
-        if r.country != ''
+        if r.subnet
+          s['subnet'] = r.subnet
+        elsif r.country != ''
           s["country"] = r.country
           s['type'] = 'geography'
         elsif r.fqdn != ''
@@ -39,7 +41,8 @@ module Fortigate
           s['start_ip'] = r.start_ip
           s['end_ip'] = r.end_ip
         else
-          s['subnet'] = r.subnet
+          Chef::Log.error("Unknown entry for address")
+          return
         end
       elsif r.class.name.end_with? 'FortigateAddrgrp'
         s = {"host" => r.host, "vdom" => r.vdom, "name" => r.name, "member" => r.member, "credentials" => r.credentials, 'comment' => r.comment}
