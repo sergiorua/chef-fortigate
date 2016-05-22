@@ -224,10 +224,14 @@ class SkyBetFG:
       dstaddr=None, service=None, nat="disable",
       auth_redirect_addr=None,
       auth_cert=None,
+      status=None,
       profile_protocol_options=None,
       ips_sensor=None,
       utm_status=None,
-      action="accept", schedule='always', ippool=None, logtraffic=None, comments=""):
+      groups=None,
+      action="accept", schedule='always', ippool=None, logtraffic=None, 
+      logtraffic_start=None,
+      comments=""):
 
     section = 'firewall policy'
     new_fw = FortiConfig(config_type='edit', name=name)
@@ -240,8 +244,14 @@ class SkyBetFG:
     new_fw.set_param('nat', nat)
     new_fw.set_param('action', action)
 
+    if status:
+      new_fw.set_param('status', '"%s"' % status)
+    if groups:
+      new_fw.set_param('groups', '"%s"' % groups)
     if logtraffic:
       new_fw.set_param('logtraffic', '"%s"' % logtraffic)
+    if logtraffic_start:
+      new_fw.set_param('logtraffic_start', '"%s"' % logtraffic_start)
     if comments:
       new_fw.set_param('comments', '"%s"' % comments)
 

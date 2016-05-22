@@ -83,7 +83,7 @@ class Chef
       content = to_yaml(new_resource)
 
       execute "fortigate-update-#{new_resource.name}" do
-        command "/opt/fortigate/add_fortigate.py -f #{file_path} -V #{@whyrun}"
+        command "/opt/fortigate/add_fortigate.py -f #{file_path} -V #{@whyrun} || ( logger -t error 'Fortigate ERROR: VIP #{new_resource.name} failed to be added'; /bin/rm -f #{file_path} )"
         action :nothing
         not_if { node.include?('is_docker') }
       end

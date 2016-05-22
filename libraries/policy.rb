@@ -34,7 +34,10 @@ class Chef
     attribute :profile_protocol_options, kind_of: String, default: nil
     attribute :ips_sensor, kind_of: String, default: nil
     attribute :utm_status, kind_of: String, default: nil
+    attribute :logtraffic_start, kind_of: String, default: nil
 
+    attribute :status, kind_of: String, default: nil
+    attribute :groups, kind_of: String, default: nil
     attr_writer :exists, :update, :type, :whyrun
   end
 
@@ -102,7 +105,7 @@ class Chef
       content = to_yaml(new_resource)
 
       execute "fortigate-update-#{new_resource.name}" do
-        command "/opt/fortigate/add_fortigate.py -f #{file_path} -V #{@whyrun}"
+        command "/opt/fortigate/add_fortigate.py -f #{file_path} -V #{@whyrun} || ( logger -t error 'Fortigate ERROR: Policy #{new_resource.name} failed to be added'; /bin/rm -f #{file_path} )"
         action :nothing
         not_if { node.include?('is_docker') }
       end
